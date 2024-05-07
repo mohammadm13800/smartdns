@@ -459,6 +459,7 @@ uninstall() {
     # Remove service file
     sudo rm /etc/systemd/system/smartdns.service
     rm -rf /etc/smartdns
+    rm -rf /root/.acme.sh/"${domain}"_*
     systemctl restart systemd-resolved
     echo -e "${purple}***********************${rest}"
     echo -e "${green}Uninstallation completed successfully.${rest}"
