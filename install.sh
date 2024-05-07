@@ -8,6 +8,7 @@ blue='\033[0;34m'
 purple='\033[0;35m'
 cyan='\033[0;36m'
 rest='\033[0m'
+ip=$(hostname -I | awk '{print $1}')
 
 # Detect the Linux distribution
 detect_distribution() {
@@ -463,11 +464,23 @@ uninstall() {
     echo -e "${yellow}____________________________________${rest}"
 }
 
+# Show Dns (dot - doh)
+show_dns() {
+    if systemctl is-active --quiet smartdns.service; then
+        echo -e "${purple}***********************${rest}"
+        echo -e "${cyan} DOH: $domain/dns-query${rest}"
+        echo -e "${cyan} $domain:53${rest}"
+        echo -e "${cyan} Dns: $ip:53${rest}"
+        echo -e "${purple}***********************${rest}"
+    fi
+}
+
 # Check install
 check() {
     if systemctl is-active --quiet smartdns.service; then
         echo -e "${purple}***********************${rest}"
         echo -e "${cyan} [SMART DNS ${green}is Active]${rest}"
+        show_dns
     else
         echo -e "${purple}***********************${rest}"
         echo -e "${yellow}[SMART DNS ${red}Not Active]${rest}"
