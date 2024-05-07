@@ -9,7 +9,7 @@
 ## نصب
 
  ```
- bash <(curl -fsSL https://raw.githubusercontent.com/Ptechgithub/smartdns/main/install.sh)
+ bash <(curl -fsSL https://raw.githubusercontent.com/Ptechgithub/smartdns/master/install.sh)
  ```
 ![26](https://github.com/Ptechgithub/configs/blob/main/media/26.jpg)
  
