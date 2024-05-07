@@ -6,7 +6,7 @@
 
 - پشتیبانی از پروتکل‌های UDP، TCP، DoT، DOH، و non-53 port
 
-## install
+## نصب
 
  ```
  bash <(curl -fsSL https://raw.githubusercontent.com/Ptechgithub/smartdns/main/install.sh)
