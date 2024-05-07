@@ -181,7 +181,7 @@ EOL
 		
 			# Ask user whether to enable DNS over TLS (DOT)
 			echo -e "${purple}***********************${rest}"
-			echo -en "${green}Do you want to enable${cyan} DNS over TLS (DOT)${green}? [default: ${yellow}no${green},${yellow} domain required${green}](yes/no): ${rest}"
+			echo -en "${green}Do you want to enable${cyan} DNS over TLS (DOT)${yellow} (domain required)${green}? (yes/no)${green}[default: ${yellow}no${green}]: ${rest}"
 			read -r enable_dot
 			
 			if [[ $enable_dot == "yes" ]]; then
@@ -190,7 +190,7 @@ EOL
 			
 			# Ask user whether to enable DNS over HTTPS (DOH)
 			echo -e "${purple}***********************${rest}"
-			echo -en "${green}Do you want to enable${cyan} DNS over HTTPS (DOH)${green}? [default: ${yellow}no${green},${yellow} domain required${green}](yes/no): ${rest}"
+			echo -en "${green}Do you want to enable${cyan} DNS over HTTPS (DOH)${yellow} (domain required)${green}? (yes/no)${green}[default: ${yellow}no${green}]: ${rest}"
             read -r enable_doh
 			
 			if [[ $enable_doh == "yes" ]]; then
@@ -233,6 +233,7 @@ EOL
 			systemctl start smartdns
 			
 			check
+			show_dns
 		fi
 	fi
 }
@@ -240,9 +241,9 @@ EOL
 # Add Domain list
 add_website() {
     if [ ! -f "/etc/systemd/system/smartdns.service" ]; then
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         echo -e "${red}The service is not installed.${rest}"
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         return
     fi
     # Get domain list from user separated by comma
@@ -315,9 +316,9 @@ add_website() {
 # Show sites
 show_sites() {
     if [ ! -f "/etc/systemd/system/smartdns.service" ]; then
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         echo -e "${red}The service is not installed.${rest}"
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         return
     fi
     echo -e "${purple}***********************${rest}"
@@ -346,9 +347,9 @@ show_sites() {
 # Update list of Domain Ips
 update_domain_ips() {
     if [ ! -f "/etc/systemd/system/smartdns.service" ]; then
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         echo -e "${red}The service is not installed.${rest}"
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         return
     fi
     
@@ -386,9 +387,9 @@ update_domain_ips() {
 # Delete Sites
 remove_sites() {
     if [ ! -f "/etc/systemd/system/smartdns.service" ]; then
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         echo -e "${red}The service is not installed.${rest}"
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         return
     fi
     # Show configured sites with numbers
@@ -442,15 +443,14 @@ remove_sites() {
 # Uninstall function
 uninstall() {
     if [ ! -f "/etc/systemd/system/smartdns.service" ]; then
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         echo -e "${red}The service is not installed.${rest}"
-        echo -e "${yellow}____________________________${rest}"
+        echo -e "${purple}***********************${rest}"
         return
     fi
     
     # Restore the resolv.conf backup
     mv /etc/resolv.conf.bak /etc/resolv.conf
-    systemctl restart systemd-resolved
     
     # Stop and disable the service
     sudo systemctl stop smartdns.service
@@ -459,18 +459,25 @@ uninstall() {
     # Remove service file
     sudo rm /etc/systemd/system/smartdns.service
     rm -rf /etc/smartdns
-    echo -e "${yellow}____________________________________${rest}"
+    systemctl restart systemd-resolved
+    echo -e "${purple}***********************${rest}"
     echo -e "${green}Uninstallation completed successfully.${rest}"
-    echo -e "${yellow}____________________________________${rest}"
+    echo -e "${purple}***********************${rest}"
 }
 
 # Show Dns (dot - doh)
 show_dns() {
     if systemctl is-active --quiet smartdns.service; then
         echo -e "${purple}***********************${rest}"
-        echo -e "${cyan} DOH: $domain/dns-query${rest}"
-        echo -e "${cyan} $domain:53${rest}"
-        echo -e "${cyan} Dns: $ip:53${rest}"
+        if [[ $enable_doh == "yes" ]]; then
+            echo -e "${yellow}DOH${cyan}: https://$domain/dns-query${rest}"
+            echo ""
+        fi
+        if [[ $enable_dot == "yes" ]]; then
+            echo -e "${yellow}DOT${cyan}: $domain${rest}"
+            echo ""
+        fi
+        echo -e "${yellow}DNS${cyan}: $ip${rest}"
         echo -e "${purple}***********************${rest}"
     fi
 }
@@ -480,7 +487,6 @@ check() {
     if systemctl is-active --quiet smartdns.service; then
         echo -e "${purple}***********************${rest}"
         echo -e "${cyan} [SMART DNS ${green}is Active]${rest}"
-        show_dns
     else
         echo -e "${purple}***********************${rest}"
         echo -e "${yellow}[SMART DNS ${red}Not Active]${rest}"
