@@ -471,13 +471,16 @@ show_dns() {
     if systemctl is-active --quiet smartdns.service; then
         echo -e "${purple}***********************${rest}"
         if [[ $enable_doh == "yes" ]]; then
+            echo -e "${green} Dns over Https${rest}"
             echo -e "${yellow}DOH${cyan}: https://$domain/dns-query${rest}"
             echo ""
         fi
         if [[ $enable_dot == "yes" ]]; then
+            echo -e "${green} Dns over Tls${rest}"
             echo -e "${yellow}DOT${cyan}: $domain${rest}"
             echo ""
         fi
+        echo -e "${green} DNS over UDP & TCP${rest}"
         echo -e "${yellow}DNS${cyan}: $ip${rest}"
         echo -e "${purple}***********************${rest}"
     fi
