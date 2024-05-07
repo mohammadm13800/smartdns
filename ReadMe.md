@@ -6,6 +6,12 @@
 
 - پشتیبانی از پروتکل‌های UDP، TCP، DoT، DOH، و non-53 port
 
+## install
+
+ ```
+ bash <(curl -fsSL https://raw.githubusercontent.com/Ptechgithub/smartdns/main/install.sh)
+ ```
+ 
 SmartDNS is a local DNS server. SmartDNS accepts DNS query requests from local clients, obtains DNS query results from multiple upstream DNS servers, and returns the fastest access results to clients. supports secure DNS protocols like DoT (DNS over TLS), DoH (DNS over HTTPS), better protect privacy,  
 Avoiding DNS pollution and improving network access speed, supports high-performance ad filtering.
 
