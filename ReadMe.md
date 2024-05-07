@@ -4,6 +4,8 @@
 
 ا- SmartDNS یک سرور DNS محلی است که درخواست‌های پرس و جوی DNS را از مشتریان محلی دریافت می‌کند، نتایج پرس و جوی DNS را از چندین سرور DNS upstream دریافت کرده و نتایج دسترسی سریعتر را به مشتریان باز می‌گرداند. SmartDNS پروتکل‌های امن DNS مانند DoT و DoH را پشتیبانی کرده و حریم خصوصی را بهبود می‌بخشد، همچنین از آلودگی DNS جلوگیری کرده و سرعت دسترسی به شبکه را افزایش می‌دهد. این سرویس از فیلترینگ تبلیغات با عملکرد بالا نیز پشتیبانی می‌کند.
 
+- پشتیبانی از پروتکل‌های UDP، TCP، DoT، DOH، و non-53 port
+
 SmartDNS is a local DNS server. SmartDNS accepts DNS query requests from local clients, obtains DNS query results from multiple upstream DNS servers, and returns the fastest access results to clients. supports secure DNS protocols like DoT (DNS over TLS), DoH (DNS over HTTPS), better protect privacy,  
 Avoiding DNS pollution and improving network access speed, supports high-performance ad filtering.
 
