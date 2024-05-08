@@ -213,7 +213,7 @@ Description=SmartDNS Service
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/smartdns -f -c /etc/smartdns/smartdns.conf
+ExecStart=/usr/local/bin/smartdns -R -f -c /etc/smartdns/smartdns.conf
 ExecReload=/bin/kill -HUP \$MAINPID
 Restart=on-failure
 
