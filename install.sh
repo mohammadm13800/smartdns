@@ -9,6 +9,7 @@ purple='\033[0;35m'
 cyan='\033[0;36m'
 rest='\033[0m'
 ip=$(hostname -I | awk '{print $1}')
+n_i=$(ip -o -4 route show to default | awk '{print $5}')
 
 # Detect the Linux distribution
 detect_distribution() {
@@ -185,7 +186,7 @@ EOL
 			read -r enable_dot
 			
 			if [[ $enable_dot == "yes" ]]; then
-			    echo "bind-tls [::]:853@eth0" >> /etc/smartdns/smartdns.conf
+			    echo "bind-tls [::]:853@$n_i" >> /etc/smartdns/smartdns.conf
 			fi
 			
 			# Ask user whether to enable DNS over HTTPS (DOH)
@@ -194,7 +195,7 @@ EOL
             read -r enable_doh
 			
 			if [[ $enable_doh == "yes" ]]; then
-			    echo "bind-https [::]:443@eth0" >> /etc/smartdns/smartdns.conf
+			    echo "bind-https [::]:443@$n_i" >> /etc/smartdns/smartdns.conf
 			fi
 			
 			# Check if any or both DOT and DOH are enabled
