@@ -223,7 +223,7 @@ EOL
 		
 			# Stop and disable systemd-resolved
 			systemctl stop systemd-resolved
-			systemctl disable systemd-resolved
+			systemctl disable systemd-resolved >/dev/null 2>&1
 			
 			# Update & backup resolv.conf
 	        cp /etc/resolv.conf /etc/resolv.conf.bak
