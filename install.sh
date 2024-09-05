@@ -95,7 +95,7 @@ download_smartdns() {
     esac
 
     # Define download URL
-    download_url="https://github.com/pymumu/smartdns/releases/download/Release45/smartdns-${arch}"
+    download_url="https://github.com/pymumu/smartdns/releases/download/Release46/smartdns-${arch}"
 
     # Install smartdns if not already installed
     if ! command -v smartdns &> /dev/null; then
